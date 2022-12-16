@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { getNasaData } from '../lib/api';
+import nasaDataReducer from '../reducer/nasaDataReducer';
 import EachCard from './Card';
 
 function CardList() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<null | Array<any>>(null);
-  const [error, setError] = useState<Nullable<Error>>(null);
+  const [state, dispatch] = useReducer(nasaDataReducer, {
+    loading: false,
+    data: null,
+    error: null,
+  });
 
   const getData = async () => {
     try {
-      setIsLoading(true);
+      dispatch({ type: 'FETCH_REQUEST' });
       const result = await getNasaData('earth', 1);
-      setData(result.collection.items);
-      setIsLoading(false);
+      dispatch({ type: 'FETCH_SUCCESS', payload: result.collection.items });
     } catch (error) {
-      setError(error as Error);
+      dispatch({ type: 'FETCH_FAILURE', payload: error });
     }
   };
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <section
       style={{ display: 'flex', flexWrap: 'wrap', rowGap: '24px', justifyContent: 'space-around' }}
     >
-      {isLoading ? (
+      {state.loading ? (
         <p>로딩중 ...</p>
       ) : (
         <>
-          {data &&
-            data?.map((item, idx) => (
+          {state.data &&
+            state.data?.map((item, idx) => (
               <div key={item?.href}>
                 <EachCard
                   imageUrl={item?.links && item?.links[0]?.href}
@@ -40,7 +43,7 @@ function CardList() {
                 />
               </div>
             ))}
-          {error && <p>에러 났어요 {error.message}</p>}
+          {state.error && <p>에러 났어요 {state.error.message}</p>}
         </>
       )}
     </section>
