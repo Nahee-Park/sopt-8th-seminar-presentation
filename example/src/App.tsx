@@ -1,13 +1,18 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
+
 import './App.css';
 import Router from './core/router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <div className="App">
-      <Router />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <Router />
+      </div>
+    </QueryClientProvider>
   );
 }
 

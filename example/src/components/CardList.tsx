@@ -1,5 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import { Suspense } from 'react';
-import { fetchNasaData } from '../lib/api';
+import { getNasaData } from '../lib/api';
 
 import EachCard from './Card';
 import ErrorBoundary from './common/ErrorBoundary';
@@ -8,15 +9,16 @@ function CardList() {
   return (
     <ErrorBoundary renderFallback={({ error, reset }) => <p>에러 났어요 {error?.message}</p>}>
       <Suspense fallback={<p>로딩중 ...</p>}>
-        <Resolved resource={fetchNasaData('earth', 1)} />
+        <Resolved />
       </Suspense>
     </ErrorBoundary>
   );
 }
 
-function Resolved({ resource }: any) {
-  const data = resource.read();
-
+function Resolved() {
+  const { data } = useQuery(['nasa_info'], () => getNasaData('earth', 1), {
+    suspense: true,
+  });
   return (
     <section
       style={{ display: 'flex', flexWrap: 'wrap', rowGap: '24px', justifyContent: 'space-around' }}
