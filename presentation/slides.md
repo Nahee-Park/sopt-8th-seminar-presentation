@@ -40,7 +40,7 @@ image: https://s3.ap-northeast-2.amazonaws.com/sopt-makers-internal//prod/image/
 
 박나희 (devstone)
 
-- SOPT 28기 웹파트
+- SOPT 28기 웹파트 
 - SOPT 29기 서버파트
 - SOPT 30기 웹파트 && 운영팀
 - (전) Goorm Software Engineer Internship (2021.9~2022.2)
@@ -48,13 +48,28 @@ image: https://s3.ap-northeast-2.amazonaws.com/sopt-makers-internal//prod/image/
 - AUSG 6th member 
 
 ---
-# 어떤 코드가 더 깔끔해 보이나요?
+# 어떤 코드가 더 이해하기 쉬우신가요?
 
-<div grid="~ cols-2 gap-4">
-<div>
-<img class='h-80 rounded mx-auto' src='/images/what-is-fp.png' />
-</div>
-</div>
+```ts
+function getBazFromX(x) {
+ if (x === undefined) {
+   return undefined;
+ }
+ if (x.foo === undefined) {
+  return undefined;
+ }
+ if (x.foo.bar === undefined) {
+   return undefined;
+ }
+return x.foo.bar.baz;
+}
+```
+
+```ts
+function getBazFromX(x) {
+  return x?.foo?.bar?.baz;
+}
+```
 
 ---
 <!-- 
