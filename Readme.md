@@ -16,7 +16,7 @@ pnpm run dev
 - useReducer를 통해 데이터 패칭을 한 예제입니다. 
 
 ### feat/example-3 branch
-- useReducer를 통한 데이터 패칭을 커스텀 훅으로 추상화시킨 예제입니다.
+- useReducer를 통 데이터 패칭을 커스텀 훅으로 추상화시킨 예제입니다.
 
 ### feat/example-4 branch
 - wrapPromise를 통해 비동기 상태를 컴포넌트 단으로 전파시켜 선언적인 처리를 한 예제입니다.
